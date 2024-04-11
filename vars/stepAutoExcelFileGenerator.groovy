@@ -1,6 +1,6 @@
 def call() {
     // Fetch Python script content from library resource
-    def pythonContent = libraryResource('resources/scripts/autoexcelfilegenerator.py')
+    def pythonContent = libraryResource('scripts/autoexcelfilegenerator.py')
 
     // Write Python script to a file in the Jenkins workspace
     writeFile(file: 'autoexcelfilegenerator.py', text: pythonContent)
