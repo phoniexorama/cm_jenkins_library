@@ -1,4 +1,4 @@
-def runMyPython() {
+def call() {
     // Fetch Python script content from library resource
     def pythonContent = libraryResource('resources/script/runtestmanager.py')
 
