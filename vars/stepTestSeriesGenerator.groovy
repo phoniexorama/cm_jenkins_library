@@ -1,6 +1,6 @@
 def call() {
     // Fetch Python script content from library resource
-    def pythonContent = libraryResource('resources/scripts/testseriesgenerator.py')
+    def pythonContent = libraryResource('scripts/testseriesgenerator.py')
 
     // Write Python script to a file in the Jenkins workspace
     writeFile(file: 'testseriesgenerator.py', text: pythonContent)
