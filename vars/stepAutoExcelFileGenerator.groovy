@@ -1,4 +1,4 @@
-def runMyPython() {
+def cal() {
     // Fetch Python script content from library resource
     def pythonContent = libraryResource('resources/script/autoexcelfilegenerator.py')
 
