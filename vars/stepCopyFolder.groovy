@@ -2,18 +2,24 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
+import java.util.List
 
-// Define a Groovy function to copy a file or directory
-def call(String sourcePath, String destinationPath) {
-    Path source = Paths.get(sourcePath)
+// Define a Groovy function to copy multiple files or directories
+def call(List<String> sourcePaths, String destinationPath) {
     Path destination = Paths.get(destinationPath)
 
     try {
-        // Copy the file or directory
-        Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING)
+        sourcePaths.each { sourcePath ->
+            Path source = Paths.get(sourcePath)
+            // Resolve the source file/directory name for the destination path
+            Path resolvedDestination = destination.resolve(source.getFileName())
 
-        println("Successfully copied '${sourcePath}' to '${destinationPath}'")
+            // Copy the file or directory
+            Files.copy(source, resolvedDestination, StandardCopyOption.REPLACE_EXISTING)
+
+            println("Successfully copied '${sourcePath}' to '${resolvedDestination}'")
+        }
     } catch (IOException e) {
-        println("Error copying '${sourcePath}' to '${destinationPath}': ${e.message}")
+        println("Error copying files/directories: ${e.message}")
     }
 }
