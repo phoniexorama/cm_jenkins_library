@@ -1,9 +1,8 @@
-// Define the copyFolder function
-def call(List<String> sourcePaths, String destinationPath) {
-    // Iterate over each source path and copy to the destination path
-    sourcePaths.each { sourcePath ->
-        // Use 'bat' step to execute batch command for copying
-        bat "xcopy \"${sourcePath}\" \"${destinationPath}\" /E /I /Y"
+// Function to copy folders using 'bat' step
+def call(sourceDestinationMap) {
+    sourceDestinationMap.each { sourcePath, destinationPath ->
+        // Use 'bat' step to execute Windows command for copying
+        bat "xcopy /E /I /Y \"${sourcePath}\" \"${destinationPath}\""
         println "Successfully copied '${sourcePath}' to '${destinationPath}'"
     }
 }
