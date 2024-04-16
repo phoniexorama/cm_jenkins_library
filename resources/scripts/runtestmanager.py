@@ -75,23 +75,11 @@ def run_batch_script(script_path):
 
 if __name__ == "__main__":
     
-    #batch_script_path = "C:/CM_Test/Frg-Bedatung_Cayenne_E4_CM12/carmakerTestseries.bat"
-    #test_series_folder_path = "C:/CM_Test/Frg-Bedatung_Cayenne_E4_CM12/Data/TestRun"
+    batch_script_path = "C:\JenkinsAgent\workspace\CarMaker\Frg-Bedatung_Cayenne_E4_CM12\carmakerTestseries.bat"
+    test_series_folder_path = "C:\JenkinsAgent\workspace\CarMaker\Frg-Bedatung_Cayenne_E4_CM12\Data\TestRun"
     #batch_script_path = os.environ.get('BATCH_SCRIPT_PATH')
     #test_series_folder_path = os.environ.get('TEST_SERIES_FOLDER_PATH')
 
-    workspace_path = os.getenv('WORKSPACE')
-
-    if not workspace_path:
-        print("Error: Jenkins workspace path (WORKSPACE) not found.")
-        exit(1)
-
-    # Construct paths relative to the Jenkins workspace
-    batch_script_relative_path = "carmakerTestseries.bat"
-    test_series_folder_relative_path = "Data\TestRun"
-
-    batch_script_path = os.path.join(workspace_path, batch_script_relative_path)
-    test_series_folder_path = os.path.join(workspace_path, test_series_folder_relative_path)
     
     format_file_config_path = os.environ.get('FORMAT_FILE_CONFIG_PATH')
     erg_format = 'DStore.Format = erg\n'
