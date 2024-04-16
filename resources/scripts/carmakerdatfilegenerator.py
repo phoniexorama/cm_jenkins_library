@@ -3,7 +3,7 @@ import shutil
 import subprocess
 from datetime import datetime
 import time
-
+import sys
 # Add the directory containing the shared scripts to Python's module search path
 sys.path.append(os.path.join(os.path.dirname(__file__), 'resources', 'scripts'))
 
