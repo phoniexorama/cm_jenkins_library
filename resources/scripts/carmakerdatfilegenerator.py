@@ -3,10 +3,10 @@ import shutil
 import subprocess
 from datetime import datetime
 import time
-
+from process_utils import wait_until_process_terminated
 
 def replace_vehicle_value(template_folder_path, new_vehicle_values):
-    time.sleep(6)  # Wait for 6 seconds
+    #time.sleep(6)  # Wait for 6 seconds
     with open(template_folder_path, 'r', encoding='utf-8') as file:
         lines = file.readlines()
 
@@ -38,7 +38,7 @@ def ascii_format_setup(file_path, new_line):
     print(f'File "{file_path}" has been updated.')
 
 def load_and_start_test_run(test_run_path):
-    time.sleep(6)  # Wait for 6 seconds
+    #time.sleep(6)  # Wait for 6 seconds
     carmaker_tm_executable = "C:\\IPG\\carmaker\\win64-12.0.2\\bin\\CM.exe"
 
     # Command to load test run into CarMaker and start it
@@ -57,14 +57,14 @@ def load_and_start_test_run(test_run_path):
 
 
 def construct_template_filename(template_folder_path):
-    time.sleep(6)  # Wait for 6 seconds
+    #time.sleep(6)  # Wait for 6 seconds
     # Replace special characters in the template path
     modified_path_format = template_folder_path.replace(":", "").replace("\\", "_")
     return modified_path_format
 
 
 def rename_files(folder_path, template_filename, new_vehicle_value):
-    time.sleep(6)  # Wait for 6 seconds
+    #time.sleep(6)  # Wait for 6 seconds
     # Obtain today's date dynamically
     today_date = datetime.now().strftime("%Y%m%d")
 
@@ -88,7 +88,7 @@ def rename_files(folder_path, template_filename, new_vehicle_value):
             print(f"Renamed '{filename}' to '{os.path.basename(new_path)}'.")
 
 def copy_files_to_log_folder(src_folder, dest_folder):
-    time.sleep(6)  # Wait for 6 seconds
+    #time.sleep(6)  # Wait for 6 seconds
     # Obtain today's date dynamically
     today_date = datetime.now().strftime("%Y%m%d")
     src_path = os.path.join(src_folder, today_date)
@@ -124,6 +124,9 @@ def main():
     for filename in os.listdir(vehicle_folder_path):
         new_vehicle_value = filename  # Use the filename as the new vehicle value
 
+        # Wait until HIL.exe is terminated
+        wait_until_process_terminated("HIL.exe")
+        
         # Replace vehicle values in the template file
         replace_vehicle_value(template_folder_path, new_vehicle_value)
         print("Vehicle values replaced successfully.")
