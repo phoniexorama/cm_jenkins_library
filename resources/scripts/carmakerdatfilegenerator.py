@@ -3,12 +3,6 @@ import shutil
 import subprocess
 from datetime import datetime
 import time
-import sys
-
-# Add the directory containing the shared scripts to Python's module search path
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'resources', 'scripts'))
-
-from process_utils import wait_until_process_terminated
 
 def replace_vehicle_value(template_folder_path, new_vehicle_values):
     #time.sleep(6)  # Wait for 6 seconds
