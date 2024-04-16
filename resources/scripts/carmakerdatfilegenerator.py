@@ -17,10 +17,8 @@ def wait_until_process_terminated(process_name):
     while is_process_running(process_name):
         time.sleep(5)  # Check every 5 seconds
 
-    print(f"{process_name} is no longer running.")
-
 def replace_vehicle_value(template_folder_path, new_vehicle_values):
-    time.sleep(6)  # Wait for 6 seconds
+    #time.sleep(6)  # Wait for 6 seconds
     with open(template_folder_path, 'r', encoding='utf-8') as file:
         lines = file.readlines()
 
@@ -71,14 +69,14 @@ def load_and_start_test_run(test_run_path):
 
 
 def construct_template_filename(template_folder_path):
-    time.sleep(6)  # Wait for 6 seconds
+    #time.sleep(6)  # Wait for 6 seconds
     # Replace special characters in the template path
     modified_path_format = template_folder_path.replace(":", "").replace("\\", "_")
     return modified_path_format
 
 
 def rename_files(folder_path, template_filename, new_vehicle_value):
-    time.sleep(6)  # Wait for 6 seconds
+    #time.sleep(6)  # Wait for 6 seconds
     # Obtain today's date dynamically
     today_date = datetime.now().strftime("%Y%m%d")
 
@@ -102,7 +100,7 @@ def rename_files(folder_path, template_filename, new_vehicle_value):
             print(f"Renamed '{filename}' to '{os.path.basename(new_path)}'.")
 
 def copy_files_to_log_folder(src_folder, dest_folder):
-    time.sleep(6)  # Wait for 6 seconds
+    #time.sleep(6)  # Wait for 6 seconds
     # Obtain today's date dynamically
     today_date = datetime.now().strftime("%Y%m%d")
     src_path = os.path.join(src_folder, today_date)
@@ -140,13 +138,19 @@ def main():
 
         # Wait until HIL.exe is terminated
         wait_until_process_terminated("HIL.exe")
-        
+        print("CM is no longer running.")
+
         # Replace vehicle values in the template file
         replace_vehicle_value(template_folder_path, new_vehicle_value)
         print("Vehicle values replaced successfully.")
 
         # Load and start the test series
         load_and_start_test_run(template_folder_path)
+
+        # Wait until HIL.exe is terminated
+        wait_until_process_terminated("HIL.exe")
+        print("CM Terminated Successfully.")
+
 
         # Construct the modified template file path
         modified_template_path = construct_template_filename(template_folder_path)
@@ -156,6 +160,7 @@ def main():
 
         # Copy renamed files to the log folder and delete from the source folder
         copy_files_to_log_folder(output_folder, log_folder)
+
 
 
 if __name__ == "__main__":
