@@ -16,6 +16,7 @@ def wait_until_process_terminated(process_name):
     while is_process_running(process_name):
         time.sleep(5)  # Check every 5 seconds
 
+
 def replace_tsfname_in_batch_script(batch_script_path, new_tsfname):
     try:
         # Read the contents of the batch script
@@ -28,7 +29,7 @@ def replace_tsfname_in_batch_script(batch_script_path, new_tsfname):
             if match:
                 # Update the line with the new TSFNAME value while preserving formatting
                 batch_script_content[i] = f"{match.group(1)}{new_tsfname}\n"
-                time.sleep(20)
+                #time.sleep(20)
                 break
 
         # Write the modified content back to the file
@@ -63,33 +64,41 @@ def erg_format_setup(file_path, new_line):
 
 def run_batch_script(script_path):
     try:
-        # Add delay of 1 minute before running the batch script
-        print("Waiting for 30 sec before executing the batch script...")
-        time.sleep(30)
-
         process = subprocess.Popen(script_path, shell=True)
-        print("Batch script executed.")
+        print("Batch script executing....")
         # Wait for the CM.exe process to finish
         while process.poll() is None:
-            time.sleep(1)  # Sleep for 1 second
-        print("CM.exe process has finished.")
+            time.sleep(5)  # Sleep for 5 second
     except subprocess.CalledProcessError as e:
         print(f"Error: {e}")
 
 
 if __name__ == "__main__":
-    batch_script_path = "C:/CM_Test/Frg-Bedatung_Cayenne_E4_CM12/carmakerTestseries.bat"
-    test_series_folder_path = "C:/CM_Test/Frg-Bedatung_Cayenne_E4_CM12/Data/TestRun"
+    
+    #batch_script_path = "C:/CM_Test/Frg-Bedatung_Cayenne_E4_CM12/carmakerTestseries.bat"
+    #test_series_folder_path = "C:/CM_Test/Frg-Bedatung_Cayenne_E4_CM12/Data/TestRun"
     #batch_script_path = os.environ.get('BATCH_SCRIPT_PATH')
     #test_series_folder_path = os.environ.get('TEST_SERIES_FOLDER_PATH')
-    print(batch_script_path)
-    print(test_series_folder_path)
-    format_file_config_path = os.environ.get('FORMAT_FILE_CONFIG_PATH')
 
+    workspace_path = os.getenv('WORKSPACE')
+
+    if not workspace_path:
+        print("Error: Jenkins workspace path (WORKSPACE) not found.")
+        exit(1)
+
+    # Construct paths relative to the Jenkins workspace
+    batch_script_relative_path = "carmakerTestseries.bat"
+    test_series_folder_relative_path = "Data\TestRun"
+
+    batch_script_path = os.path.join(workspace_path, batch_script_relative_path)
+    test_series_folder_path = os.path.join(workspace_path, test_series_folder_relative_path)
+    
+    format_file_config_path = os.environ.get('FORMAT_FILE_CONFIG_PATH')
     erg_format = 'DStore.Format = erg\n'
+
     # Initial setup for erg format
     erg_format_setup(format_file_config_path, erg_format)
-    
+
     # Get a list of all .ts files in the directory
     ts_files = [filename for filename in os.listdir(test_series_folder_path) if filename.endswith(".ts")]
 
@@ -99,7 +108,7 @@ if __name__ == "__main__":
         # Wait until HIL.exe is terminated
         wait_until_process_terminated("HIL.exe")
         print("CM is no longer running.")
-        
+
         # Replace TSFNAME in the batch script with the current ts file name
         replace_tsfname_in_batch_script(batch_script_path, ts_file)
 
