@@ -3,7 +3,7 @@ import shutil
 import subprocess
 from datetime import datetime
 import time
-from process_utils import wait_until_process_terminated
+from resources.scripts.process_utils import wait_until_process_terminated
 
 def replace_vehicle_value(template_folder_path, new_vehicle_values):
     #time.sleep(6)  # Wait for 6 seconds
