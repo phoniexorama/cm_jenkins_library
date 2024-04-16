@@ -2,6 +2,19 @@ import subprocess
 import time
 import os
 import re
+import psutil
+
+def is_process_running(process_name):
+    """Check if a process with the given name is currently running."""
+    for proc in psutil.process_iter(['pid', 'name']):
+        if proc.info['name'] == process_name:
+            return True
+    return False
+
+def wait_until_process_terminated(process_name):
+    """Wait until a process with the given name is terminated."""
+    while is_process_running(process_name):
+        time.sleep(5)  # Check every 5 seconds
 
 def replace_tsfname_in_batch_script(batch_script_path, new_tsfname):
     try:
@@ -81,8 +94,16 @@ if __name__ == "__main__":
     for ts_file in ts_files:
         ts_file_path = os.path.join(test_series_folder_path, ts_file)
 
+        # Wait until HIL.exe is terminated
+        wait_until_process_terminated("HIL.exe")
+        print("CM is no longer running.")
+        
         # Replace TSFNAME in the batch script with the current ts file name
         replace_tsfname_in_batch_script(batch_script_path, ts_file)
 
         # Execute the modified batch script
         run_batch_script(batch_script_path)
+
+        # Wait until HIL.exe is terminated
+        wait_until_process_terminated("HIL.exe")
+        print("CM Terminated Successfully.")
