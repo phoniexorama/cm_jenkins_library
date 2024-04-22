@@ -34,10 +34,14 @@ SET TSFPATH=C:/JenkinsAgent/workspace/CarMaker/Frg-Bedatung_Cayenne_E4_CM12/Data
 REM 6) The Tcl script to remote control the CarMaker GUI
 SET TCLFNAME=CMGUI_RemCtrl.tcl
 SET TCLFPATH=C:/JenkinsAgent/workspace/CarMaker/Frg-Bedatung_Cayenne_E4_CM12/Data/Script/Examples/%TCLFNAME%
+SET VHCLNAME=PO546_E4_Cayenne_SUV_TOP_VFF
+SET VHCLPATH=C:/JenkinsAgent/workspace/CarMaker/Frg-Bedatung_Cayenne_E4_CM12/Data/Vehicle/%VHCLNAME%
+SET MNAME=C:/JenkinsAgent/workspace/CarMaker/Frg-Bedatung_Cayenne_E4_CM12/Data/TestRun/Ausrollen
 
 REM 7) Control flags
 SET SIM_TS=1
 SET SIM_TR=0
+SET SIM_MC=1
 SET STOP_ABD=1
 
 REM Lauch CarMaker GUI:
