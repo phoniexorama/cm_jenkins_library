@@ -141,10 +141,11 @@ def delete_folder(folder_path):
         print(f"Error occurred while deleting folder '{folder_path}': {e}")
 
 if __name__ == "__main__":
-    batch_script_path = "C:/CM_Test/Frg-Bedatung_Cayenne_E4_CM12/carmaker.bat"
-    source_path = "C:/CM_Test/Frg-Bedatung_Cayenne_E4_CM12/SimOutput/ENGPMAKNB022"
-    modelcheck_path = "C:/CM_Test/Frg-Bedatung_Cayenne_E4_CM12/ModelCheck"
-    vehicle_folder_path = "C:/CM_Test/Frg-Bedatung_Cayenne_E4_CM12/Data/Vehicle"
+    
+    batch_script_path = os.environ.get('BATCH_SCRIPT_PATH')
+    simoutput_path = os.environ.get('OUTPUT_FOLDER')
+    modelcheck_path = os.environ.get('MODELCHECK_PATH')
+    vehicle_folder_path =  os.environ.get('VEHICLE_FOLDER_PATH')
 
     replacements = {
         'SIM_MC=0': 'SIM_MC=1',
@@ -170,7 +171,7 @@ if __name__ == "__main__":
 
         new_folder_name = f"ModelCheck_{vhcl_file[:-4]}"  # Strip '_VFF' from file name
 
-        copied_folder_path = copy_and_rename_folder(source_path, modelcheck_path, new_folder_name)
+        copied_folder_path = copy_and_rename_folder(simoutput_path, modelcheck_path, new_folder_name)
         if copied_folder_path:
-            delete_folder(os.path.join(source_path, 'ModelCheck'))
+            delete_folder(os.path.join(simoutput_path, 'ModelCheck'))
 
