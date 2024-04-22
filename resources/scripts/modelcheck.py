@@ -142,10 +142,13 @@ if __name__ == "__main__":
         run_batch_script(batch_script_path)
 
         wait_until_process_terminated("HIL.exe")
-        print("CM is Terminated Successfully.")
+        print("CM exit...")
 
         new_folder_name = f"ModelCheck_{vhcl_file[:-4]}"  # Strip '_VFF' from file name
 
         copied_folder_path = copy_and_rename_folder(source_path, modelcheck_path, new_folder_name)
         if copied_folder_path:
             delete_folder(os.path.join(source_path, 'ModelCheck'))
+
+        wait_until_process_terminated("HIL.exe")
+        print("CM is Terminated Successfully.")
