@@ -29,14 +29,14 @@ SET CMAPP=CarMaker.win64.exe
 
 REM 5) Some TestSerie and TestRun example to be simulated
 SET TSFNAME=PO546_E4_Cayenne_SUV_TOP_VFF.ts
-SET TSFPATH=%WORKSPACE%/Data/TestRun/%TSFNAME%
+SET TSFPATH=%WORKSPACE%//Data//TestRun//%TSFNAME%
 
 REM 6) The Tcl script to remote control the CarMaker GUI
 SET TCLFNAME=CMGUI_RemCtrl.tcl
-SET TCLFPATH=%WORKSPACE%\Data\Script\Examples\%TCLFNAME%
+SET TCLFPATH=%WORKSPACE%//Data//Script//Examples//%TCLFNAME%
 SET VHCLNAME=PO546_E4_Cayenne_SUV_TOP_VFF
-SET VHCLPATH=%WORKSPACE%\Data\Vehicle\%VHCLNAME%
-SET MNAME=%WORKSPACE%\Data\TestRun\Ausrollen
+SET VHCLPATH=%WORKSPACE%//Data//Vehicle//%VHCLNAME%
+SET MNAME=%WORKSPACE%//Data//TestRun//Ausrollen
 
 REM 7) Control flags
 SET SIM_TS=1
