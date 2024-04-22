@@ -18,16 +18,7 @@ def wait_until_process_terminated(process_name):
         time.sleep(5)  # Check every 5 seconds
 
 def replace_TS_MC_file(file_path, replacements):
-    """
-    Replace text in a file based on a dictionary of replacements.
 
-    Args:
-        file_path (str): Path to the file to modify.
-        replacements (dict): Dictionary containing old_string -> new_string mappings.
-
-    Returns:
-        bool: True if replacements were made successfully, False otherwise.
-    """
     if not os.path.isfile(file_path):
         print(f"Error: File '{file_path}' not found.")
         return False
