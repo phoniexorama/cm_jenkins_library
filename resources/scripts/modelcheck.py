@@ -78,7 +78,17 @@ def run_batch_script(script_path):
         print(f"Error: {e}")
 
 def copy_and_rename_folder(source_path, destination_path, new_folder_name):
+    """
+    Copy a folder from source_path to destination_path and rename it.
 
+    Args:
+        source_path (str): Path to the source folder.
+        destination_path (str): Path to the destination folder.
+        new_folder_name (str): New name for the copied folder.
+
+    Returns:
+        bool: True if folder was copied and renamed successfully, False otherwise.
+    """
     try:
         source_folder = os.path.join(source_path, 'ModelCheck')
 
@@ -133,7 +143,12 @@ def replace_vhclfname_in_batch_script(batch_script_path, new_vhclfname):
         print(f"An error occurred: {e}")
 
 def delete_folder(folder_path):
+    """
+    Delete a folder and its contents recursively.
 
+    Args:
+        folder_path (str): Path to the folder to delete.
+    """
     try:
         shutil.rmtree(folder_path)
         print(f"Folder '{folder_path}' and its contents deleted.")
@@ -141,11 +156,10 @@ def delete_folder(folder_path):
         print(f"Error occurred while deleting folder '{folder_path}': {e}")
 
 if __name__ == "__main__":
-    
     batch_script_path = os.environ.get('BATCH_SCRIPT_PATH')
-    simoutput_path = os.environ.get('OUTPUT_FOLDER')
-    modelcheck_path = os.environ.get('MODELCHECK_PATH')
-    vehicle_folder_path =  os.environ.get('VEHICLE_FOLDER_PATH')
+    source_path = os.environ.get('OUTPUT_FOLDER')
+    destination_path = os.environ.get('MODELCHECK_PATH')
+    vehicle_folder_path = os.environ.get('VFF_FOLDER_PATH')
 
     replacements = {
         'SIM_MC=0': 'SIM_MC=1',
@@ -171,7 +185,6 @@ if __name__ == "__main__":
 
         new_folder_name = f"ModelCheck_{vhcl_file[:-4]}"  # Strip '_VFF' from file name
 
-        copied_folder_path = copy_and_rename_folder(simoutput_path, modelcheck_path, new_folder_name)
+        copied_folder_path = copy_and_rename_folder(source_path, destination_path, new_folder_name)
         if copied_folder_path:
-            delete_folder(os.path.join(simoutput_path, 'ModelCheck'))
-
+            delete_folder(os.path.join(source_path, 'ModelCheck'))
