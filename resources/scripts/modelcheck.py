@@ -51,15 +51,7 @@ def replace_TS_MC_file(file_path, replacements):
         return False
 
 def run_batch_script(script_path):
-    """
-    Execute a batch script.
 
-    Args:
-        script_path (str): Path to the batch script.
-
-    Raises:
-        subprocess.CalledProcessError: If the subprocess call returns a non-zero exit code.
-    """
     try:
         process = subprocess.Popen(script_path, shell=True)
         print("Batch script executing....")
@@ -69,17 +61,7 @@ def run_batch_script(script_path):
         print(f"Error: {e}")
 
 def copy_and_rename_folder(source_path, destination_path, new_folder_name):
-    """
-    Copy a folder from source_path to destination_path and rename it.
 
-    Args:
-        source_path (str): Path to the source folder.
-        destination_path (str): Path to the destination folder.
-        new_folder_name (str): New name for the copied folder.
-
-    Returns:
-        bool: True if folder was copied and renamed successfully, False otherwise.
-    """
     try:
         source_folder = os.path.join(source_path, 'ModelCheck')
 
@@ -106,14 +88,7 @@ def copy_and_rename_folder(source_path, destination_path, new_folder_name):
         return False
 
 def replace_vhclfname_in_batch_script(batch_script_path, new_vhclfname):
-    """
-    Replace the value of VHCLNAME in a batch script.
 
-    Args:
-        batch_script_path (str): Path to the batch script.
-        new_vhclfname (str): New value for VHCLNAME.
-
-    """
     try:
         with open(batch_script_path, 'r') as file:
             batch_script_content = file.readlines()
@@ -134,12 +109,7 @@ def replace_vhclfname_in_batch_script(batch_script_path, new_vhclfname):
         print(f"An error occurred: {e}")
 
 def delete_folder(folder_path):
-    """
-    Delete a folder and its contents recursively.
 
-    Args:
-        folder_path (str): Path to the folder to delete.
-    """
     try:
         shutil.rmtree(folder_path)
         print(f"Folder '{folder_path}' and its contents deleted.")
