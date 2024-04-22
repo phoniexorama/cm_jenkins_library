@@ -161,6 +161,11 @@ if __name__ == "__main__":
     destination_path = "C:/JenkinsAgent/workspace/CarMaker/Frg-Bedatung_Cayenne_E4_CM12/ModelCheck"
     vehicle_folder_path = "C:/JenkinsAgent/workspace/CarMaker/Frg-Bedatung_Cayenne_E4_CM12/Data/Vehicle"
 
+    #batch_script_path = os.environ.get('BATCH_SCRIPT_PATH')
+    #source_path = os.environ.get('OUTPUT_FOLDER')
+    #destination_path = os.environ.get('MODELCHECK_PATH')
+    #vehicle_folder_path = os.environ.get('VEHICLE_FOLDER_PATH')
+
     replacements = {
         'SIM_MC=0': 'SIM_MC=1',
         'SIM_TS=1': 'SIM_TS=0'
