@@ -16,6 +16,37 @@ def wait_until_process_terminated(process_name):
     while is_process_running(process_name):
         time.sleep(5)  # Check every 5 seconds
 
+def replace_TS_MC_file(file_path, replacements):
+    if not os.path.isfile(file_path):
+        print(f"Error: File '{file_path}' not found.")
+        return False
+
+    try:
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+
+        modified = False
+        with open(file_path, 'w') as file:
+            for line in lines:
+                for old_string, new_string in replacements.items():
+                    if old_string in line:
+                        modified_line = line.replace(old_string, new_string)
+                        file.write(modified_line)
+                        modified = True
+                        break
+                else:
+                    file.write(line)
+
+        if modified:
+            print(f"Replacements made in '{file_path}'")
+            return True
+        else:
+            print(f"No replacements made in '{file_path}'")
+            return False
+
+    except Exception as e:
+        print(f"Error occurred while processing '{file_path}': {e}")
+        return False
 
 def replace_tsfname_in_batch_script(batch_script_path, new_tsfname):
     try:
@@ -84,6 +115,13 @@ if __name__ == "__main__":
     # Initial setup for erg format
     erg_format_setup(format_file_config_path, erg_format)
 
+    replacements = {
+        'SIM_MC=1': 'SIM_MC=0',
+        'SIM_TS=0': 'SIM_TS=1'
+    }
+
+    replace_TS_MC_file(batch_script_path, replacements)
+    
     # Get a list of all .ts files in the directory
     ts_files = [filename for filename in os.listdir(test_series_folder_path) if filename.endswith(".ts")]
 
