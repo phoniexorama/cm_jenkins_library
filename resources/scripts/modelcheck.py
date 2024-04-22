@@ -60,7 +60,7 @@ def run_batch_script(script_path):
     except subprocess.CalledProcessError as e:
         print(f"Error: {e}")
 
-def copy_and_rename_folder(source_path, destination_path, new_folder_name):
+def copy_and_rename_folder(source_path, modelcheck_path, new_folder_name):
 
     try:
         source_folder = os.path.join(source_path, 'ModelCheck')
@@ -69,7 +69,7 @@ def copy_and_rename_folder(source_path, destination_path, new_folder_name):
             print(f"Error: Source folder '{source_folder}' not found.")
             return False
 
-        destination_folder = os.path.join(destination_path, new_folder_name)
+        destination_folder = os.path.join(modelcheck_path, new_folder_name)
 
         if os.path.exists(destination_folder):
             print(f"Error: Destination folder '{destination_folder}' already exists.")
@@ -119,7 +119,7 @@ def delete_folder(folder_path):
 if __name__ == "__main__":
     batch_script_path = os.environ.get('BATCH_SCRIPT_PATH')
     source_path = os.environ.get('OUTPUT_FOLDER')
-    destination_path = os.environ.get('MODELCHECK_PATH')
+    modelcheck_path = os.environ.get('MODELCHECK_PATH')
     vehicle_folder_path = os.environ.get('VFF_FOLDER_PATH')
 
     replacements = {
@@ -146,6 +146,6 @@ if __name__ == "__main__":
 
         new_folder_name = f"ModelCheck_{vhcl_file[:-4]}"  # Strip '_VFF' from file name
 
-        copied_folder_path = copy_and_rename_folder(source_path, destination_path, new_folder_name)
+        copied_folder_path = copy_and_rename_folder(source_path, modelcheck_path, new_folder_name)
         if copied_folder_path:
             delete_folder(os.path.join(source_path, 'ModelCheck'))
