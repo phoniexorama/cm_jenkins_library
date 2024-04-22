@@ -62,11 +62,13 @@ def run_batch_script(script_path):
 
 def copy_and_rename_folder(source_path, modelcheck_path, new_folder_name):
     try:
-        # Ensure ModelCheck folder exists in the workspace
-        modelcheck_folder = os.path.join(modelcheck_path, 'ModelCheck')
-        if not os.path.exists(modelcheck_folder):
-            os.makedirs(modelcheck_folder)
-            print(f"Created ModelCheck folder at '{modelcheck_folder}'")
+        # Destination folder path where ModelCheck folder should exist
+        destination_folder = os.path.join(modelcheck_path, 'ModelCheck')
+
+        # Ensure ModelCheck folder exists in the destination path
+        if not os.path.exists(destination_folder):
+            os.makedirs(destination_folder)
+            print(f"Created ModelCheck folder at '{destination_folder}'")
 
         # Source folder path
         source_folder = os.path.join(source_path, 'ModelCheck')
@@ -75,23 +77,22 @@ def copy_and_rename_folder(source_path, modelcheck_path, new_folder_name):
             print(f"Error: Source folder '{source_folder}' not found.")
             return False
 
-        # Destination folder path
-        destination_folder = os.path.join(modelcheck_folder, new_folder_name)
+        # Final destination path including new folder name
+        new_folder_path = os.path.join(destination_folder, new_folder_name)
 
-        if os.path.exists(destination_folder):
-            print(f"Error: Destination folder '{destination_folder}' already exists.")
+        if os.path.exists(new_folder_path):
+            print(f"Error: Destination folder '{new_folder_path}' already exists.")
             return False
 
         # Copy and rename the source folder to the destination
-        shutil.copytree(source_folder, destination_folder)
-        print(f"Folder '{source_folder}' copied and renamed to '{destination_folder}'")
+        shutil.copytree(source_folder, new_folder_path)
+        print(f"Folder '{source_folder}' copied and renamed to '{new_folder_path}'")
 
         return True
 
     except Exception as e:
         print(f"Error occurred during folder copy: {e}")
         return False
-
 def replace_vhclfname_in_batch_script(batch_script_path, new_vhclfname):
 
     try:
