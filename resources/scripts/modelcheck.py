@@ -18,7 +18,16 @@ def wait_until_process_terminated(process_name):
         time.sleep(5)  # Check every 5 seconds
 
 def replace_TS_MC_file(file_path, replacements):
+    """
+    Replace text in a file based on a dictionary of replacements.
 
+    Args:
+        file_path (str): Path to the file to modify.
+        replacements (dict): Dictionary containing old_string -> new_string mappings.
+
+    Returns:
+        bool: True if replacements were made successfully, False otherwise.
+    """
     if not os.path.isfile(file_path):
         print(f"Error: File '{file_path}' not found.")
         return False
@@ -51,7 +60,15 @@ def replace_TS_MC_file(file_path, replacements):
         return False
 
 def run_batch_script(script_path):
+    """
+    Execute a batch script.
 
+    Args:
+        script_path (str): Path to the batch script.
+
+    Raises:
+        subprocess.CalledProcessError: If the subprocess call returns a non-zero exit code.
+    """
     try:
         process = subprocess.Popen(script_path, shell=True)
         print("Batch script executing....")
@@ -60,41 +77,52 @@ def run_batch_script(script_path):
     except subprocess.CalledProcessError as e:
         print(f"Error: {e}")
 
-def copy_and_rename_folder(source_path, modelcheck_path, new_folder_name):
+def copy_and_rename_folder(source_path, destination_path, new_folder_name):
+    """
+    Copy a folder from source_path to destination_path and rename it.
+
+    Args:
+        source_path (str): Path to the source folder.
+        destination_path (str): Path to the destination folder.
+        new_folder_name (str): New name for the copied folder.
+
+    Returns:
+        bool: True if folder was copied and renamed successfully, False otherwise.
+    """
     try:
-        # Destination folder path where ModelCheck folder should exist
-        destination_folder = os.path.join(modelcheck_path, 'ModelCheck')
-
-        # Ensure ModelCheck folder exists in the destination path
-        if not os.path.exists(destination_folder):
-            os.makedirs(destination_folder)
-            print(f"Created ModelCheck folder at '{destination_folder}'")
-
-        # Source folder path
         source_folder = os.path.join(source_path, 'ModelCheck')
 
         if not os.path.exists(source_folder):
             print(f"Error: Source folder '{source_folder}' not found.")
             return False
 
-        # Final destination path including new folder name
-        new_folder_path = os.path.join(destination_folder, new_folder_name)
+        destination_folder = os.path.join(destination_path, new_folder_name)
 
-        if os.path.exists(new_folder_path):
-            print(f"Error: Destination folder '{new_folder_path}' already exists.")
+        if os.path.exists(destination_folder):
+            print(f"Error: Destination folder '{destination_folder}' already exists.")
             return False
 
-        # Copy and rename the source folder to the destination
-        shutil.copytree(source_folder, new_folder_path)
-        print(f"Folder '{source_folder}' copied and renamed to '{new_folder_path}'")
-
-        return True
+        try:
+            shutil.copytree(source_folder, destination_folder)
+            print(f"Folder '{source_folder}' copied and renamed to '{destination_folder}'")
+            return True
+        except Exception as copy_error:
+            print(f"Error occurred during folder copy: {copy_error}")
+            return False
 
     except Exception as e:
-        print(f"Error occurred during folder copy: {e}")
+        print(f"Error occurred while preparing folder copy: {e}")
         return False
-def replace_vhclfname_in_batch_script(batch_script_path, new_vhclfname):
 
+def replace_vhclfname_in_batch_script(batch_script_path, new_vhclfname):
+    """
+    Replace the value of VHCLNAME in a batch script.
+
+    Args:
+        batch_script_path (str): Path to the batch script.
+        new_vhclfname (str): New value for VHCLNAME.
+
+    """
     try:
         with open(batch_script_path, 'r') as file:
             batch_script_content = file.readlines()
@@ -115,7 +143,12 @@ def replace_vhclfname_in_batch_script(batch_script_path, new_vhclfname):
         print(f"An error occurred: {e}")
 
 def delete_folder(folder_path):
+    """
+    Delete a folder and its contents recursively.
 
+    Args:
+        folder_path (str): Path to the folder to delete.
+    """
     try:
         shutil.rmtree(folder_path)
         print(f"Folder '{folder_path}' and its contents deleted.")
@@ -123,10 +156,10 @@ def delete_folder(folder_path):
         print(f"Error occurred while deleting folder '{folder_path}': {e}")
 
 if __name__ == "__main__":
-    batch_script_path = os.environ.get('BATCH_SCRIPT_PATH')
-    source_path = os.environ.get('OUTPUT_FOLDER')
-    modelcheck_path = os.environ.get('MODELCHECK_PATH')
-    vehicle_folder_path = os.environ.get('VFF_FOLDER_PATH')
+    batch_script_path = "C:/JenkinsAgent/workspace/CarMaker/Frg-Bedatung_Cayenne_E4_CM12/carmaker.bat"
+    source_path = "C:/JenkinsAgent/workspace/CarMaker/Frg-Bedatung_Cayenne_E4_CM12/SimOutput/ENGPMAKNB022"
+    destination_path = "C:/JenkinsAgent/workspace/CarMaker/Frg-Bedatung_Cayenne_E4_CM12/ModelCheck"
+    vehicle_folder_path = "C:/JenkinsAgent/workspace/CarMaker/Frg-Bedatung_Cayenne_E4_CM12/Data/Vehicle"
 
     replacements = {
         'SIM_MC=0': 'SIM_MC=1',
@@ -148,13 +181,10 @@ if __name__ == "__main__":
         run_batch_script(batch_script_path)
 
         wait_until_process_terminated("HIL.exe")
-        print("CM exit...")
+        print("CM is Terminated Successfully.")
 
         new_folder_name = f"ModelCheck_{vhcl_file[:-4]}"  # Strip '_VFF' from file name
 
-        copied_folder_path = copy_and_rename_folder(source_path, modelcheck_path, new_folder_name)
+        copied_folder_path = copy_and_rename_folder(source_path, destination_path, new_folder_name)
         if copied_folder_path:
             delete_folder(os.path.join(source_path, 'ModelCheck'))
-
-        wait_until_process_terminated("HIL.exe")
-        print("CM is Terminated Successfully.")
