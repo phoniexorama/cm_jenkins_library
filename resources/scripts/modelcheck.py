@@ -156,15 +156,15 @@ def delete_folder(folder_path):
         print(f"Error occurred while deleting folder '{folder_path}': {e}")
 
 if __name__ == "__main__":
-    batch_script_path = "C:/JenkinsAgent/workspace/CarMaker/Frg-Bedatung_Cayenne_E4_CM12/carmaker.bat"
-    source_path = "C:/JenkinsAgent/workspace/CarMaker/Frg-Bedatung_Cayenne_E4_CM12/SimOutput/ENGPMAKNB022"
-    destination_path = "C:/JenkinsAgent/workspace/CarMaker/Frg-Bedatung_Cayenne_E4_CM12/ModelCheck"
-    vehicle_folder_path = "C:/JenkinsAgent/workspace/CarMaker/Frg-Bedatung_Cayenne_E4_CM12/Data/Vehicle"
+    #batch_script_path = "C:/JenkinsAgent/workspace/CarMaker/Frg-Bedatung_Cayenne_E4_CM12/carmaker.bat"
+    #source_path = "C:/JenkinsAgent/workspace/CarMaker/Frg-Bedatung_Cayenne_E4_CM12/SimOutput/ENGPMAKNB022"
+    #destination_path = "C:/JenkinsAgent/workspace/CarMaker/Frg-Bedatung_Cayenne_E4_CM12/ModelCheck"
+    #vehicle_folder_path = "C:/JenkinsAgent/workspace/CarMaker/Frg-Bedatung_Cayenne_E4_CM12/Data/Vehicle"
 
-    #batch_script_path = os.environ.get('BATCH_SCRIPT_PATH')
-    #source_path = os.environ.get('OUTPUT_FOLDER')
-    #destination_path = os.environ.get('MODELCHECK_PATH')
-    #vehicle_folder_path = os.environ.get('VEHICLE_FOLDER_PATH')
+    batch_script_path = os.environ.get('BATCH_SCRIPT_PATH')
+    source_path = os.environ.get('OUTPUT_FOLDER')
+    destination_path = os.environ.get('MODELCHECK_PATH')
+    vehicle_folder_path = os.environ.get('VEHICLE_FOLDER_PATH')
 
     replacements = {
         'SIM_MC=0': 'SIM_MC=1',
