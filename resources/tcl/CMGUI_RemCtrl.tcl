@@ -56,6 +56,26 @@ if $env(SIM_TR) {
 	WaitForStatus idle
 }
 
+# If a model check to simulate was specified
+if $env(SIM_MC) {
+	
+	# Load a TestRun
+	LoadTestRun "$env(MNAME)"
+
+	# Set Vehicle value
+	KeyValue set Vehicle "$env(VHCLPATH)"
+	
+	# open model check window
+	ModelCheck::Popup
+	# trigger model check calculations
+	ModelCheck::Run
+	
+	# Start simulation of the TestRun
+	StartSim
+	WaitForStatus running
+	WaitForStatus idle
+}
+
 # Reset the saving mode
 SaveMode collect_only
 
