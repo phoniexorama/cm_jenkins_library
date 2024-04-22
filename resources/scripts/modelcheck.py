@@ -62,37 +62,35 @@ def run_batch_script(script_path):
 
 def copy_and_rename_folder(source_path, modelcheck_path, new_folder_name):
     try:
+        # Ensure ModelCheck folder exists in the workspace
+        modelcheck_folder = os.path.join(modelcheck_path, 'ModelCheck')
+        if not os.path.exists(modelcheck_folder):
+            os.makedirs(modelcheck_folder)
+            print(f"Created ModelCheck folder at '{modelcheck_folder}'")
+
+        # Source folder path
         source_folder = os.path.join(source_path, 'ModelCheck')
 
         if not os.path.exists(source_folder):
             print(f"Error: Source folder '{source_folder}' not found.")
             return False
 
-        destination_folder = os.path.join(modelcheck_path, new_folder_name)
+        # Destination folder path
+        destination_folder = os.path.join(modelcheck_folder, new_folder_name)
 
         if os.path.exists(destination_folder):
             print(f"Error: Destination folder '{destination_folder}' already exists.")
             return False
 
+        # Copy and rename the source folder to the destination
         shutil.copytree(source_folder, destination_folder)
         print(f"Folder '{source_folder}' copied and renamed to '{destination_folder}'")
 
-        # Verify if the folder exists after copy
-        if os.path.exists(destination_folder):
-            print(f"Destination folder '{destination_folder}' found.")
-        else:
-            print(f"Error: Destination folder '{destination_folder}' not found after copy.")
-
         return True
-
-    except FileNotFoundError as e:
-        print(f"Error: {e}")
-        return False
 
     except Exception as e:
         print(f"Error occurred during folder copy: {e}")
         return False
-
 
 def replace_vhclfname_in_batch_script(batch_script_path, new_vhclfname):
 
