@@ -25,7 +25,7 @@ SET CMPRJDIR=C:\CM_Test\%PROJECTNAME%
 REM 4) The (project related) path of the CarMaker application
 REM    to calculate the simulation
 REM SET CMAPP=src/CarMaker.win64.exe
-REM -> To use standard application of the installation folder:
+REM To use standard application of the installation folder:
 SET CMAPP=CarMaker.win64.exe
 
 REM 5) Some TestSerie and TestRun example to be simulated
