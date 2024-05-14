@@ -88,7 +88,7 @@ def main():
         os.makedirs(excel_folder_path)
     
     for vff_filename in os.listdir(vff_folder_path):
-        if vff_filename.endswith("_VFF") or vff_filename.endswith("_PSV"):
+        if vff_filename.endswith("_VFF") or vff_filename.endswith("_PVS"):
             vff_file_path = os.path.join(vff_folder_path, vff_filename)
             description_line = extract_description_line(vff_file_path)
             tire_info = extract_tire_info(vff_file_path)
