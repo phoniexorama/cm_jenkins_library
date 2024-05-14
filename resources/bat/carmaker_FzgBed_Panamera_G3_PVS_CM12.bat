@@ -19,7 +19,7 @@ REM 2) APO broker daemon (automatically started, just if needed to close it)
 SET APOBD=%CMDIR%\bin\apobrokerd.exe
 
 REM 3) The CarMaker project, this sets the Tcl variable HIL(ProjDir)
-SET CMPRJDIR=C:\JenkinsAgent\workspace\CarMaker\Fzg-Bedatung_992_T_CM12
+SET CMPRJDIR=C:\JenkinsAgent\workspace\CarMaker\FzgBed_Panamera_G3_PVS_CM12
 
 REM 4) The (project related) path of the CarMaker application
 REM    to calculate the simulation
@@ -29,14 +29,14 @@ SET CMAPP=CarMaker.win64.exe
 
 REM 5) Some TestSerie and TestRun example to be simulated
 SET TSFNAME=PO546_E4_Cayenne_SUV_TOP_VFF.ts
-SET TSFPATH=C:/JenkinsAgent/workspace/CarMaker/Fzg-Bedatung_992_T_CM12/Data/TestRun/%TSFNAME%
+SET TSFPATH=C:/JenkinsAgent/workspace/CarMaker/FzgBed_Panamera_G3_PVS_CM12/Data/TestRun/%TSFNAME%
 
 REM 6) The Tcl script to remote control the CarMaker GUI
 SET TCLFNAME=CMGUI_RemCtrl.tcl
-SET TCLFPATH=C:/JenkinsAgent/workspace/CarMaker/Fzg-Bedatung_992_T_CM12/Data/Script/Examples/%TCLFNAME%
+SET TCLFPATH=C:/JenkinsAgent/workspace/CarMaker/FzgBed_Panamera_G3_PVS_CM12/Data/Script/Examples/%TCLFNAME%
 SET VHCLNAME=PO546_E4_Cayenne_SUV_TOP_VFF
-SET VHCLPATH=C:/JenkinsAgent/workspace/CarMaker/Fzg-Bedatung_992_T_CM12/Data/Vehicle/%VHCLNAME%
-SET MNAME=C:/JenkinsAgent/workspace/CarMaker/Fzg-Bedatung_992_T_CM12/Data/TestRun/Ausrollen
+SET VHCLPATH=C:/JenkinsAgent/workspace/CarMaker/FzgBed_Panamera_G3_PVS_CM12/Data/Vehicle/%VHCLNAME%
+SET MNAME=C:/JenkinsAgent/workspace/CarMaker/FzgBed_Panamera_G3_PVS_CM12/Data/TestRun/Ausrollen
 
 REM 7) Control flags
 SET SIM_TS=1
